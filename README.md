@@ -1,8 +1,11 @@
+![Python](https://img.shields.io/badge/python-3.13-blue)
+![Docker](https://img.shields.io/badge/docker-ready-green)
+![GitHub License](https://img.shields.io/badge/license-MIT-blue)
+
+
 # Steam Game Popularity Predictor
 
-Predict the potential popularity of Steam games using an XGBoost model.
-
-This project includes a full ML workflow: exploratory data analysis, model training, hyperparameter tuning, and deployment via FastAPI and Fly.io.
+With thousands of games on Steam, it can be difficult to guess how well a new game might perform just by looking at its basic information. I created this project to explore whether publicly available game metadata, e.g.,  price, release date, and categories—can help predict how popular a game will become. The result is a simple tool that turns game metadata into an estimated popularity score, helping highlight what aspects of a game may contribute most to its success.
 
 ---
 
@@ -38,6 +41,8 @@ steam-game-predictor/
 ├── runapp.sh                    # Entrypoint for Docker container (runs uvicorn)
 ├── train.py                     # Train final model with best parameters, save model & log_scores
 ├── transformers.py              # Column transformers & pipeline for train.py
+├── data
+│   ├── data_preprocessed.pkl    # Pickle file for preprocessed data
 └── uv.lock                      # Project dependencies
 ```
 
@@ -47,8 +52,10 @@ steam-game-predictor/
 
 1. **EDA & Model Selection** (`notebook.ipynb`)  
    - Explore Steam game dataset  
-   - Train multiple models (XGBoost, etc.)  
-   - Tune hyperparameters and select best model  
+   - Feature engineering
+   - Train multiple models (DecisionTree, RandomForest, XGBoost)  
+   - Tune hyperparameters with `RandomizedSearchCV`and select best model
+   - Plot metrics and feature importances (built into the models, permutation-based and SHapley Additive eXplanations (SHAP) based)
 
 2. **Train Final Model** (`train.py`)  
    - Uses cleaned data and best hyperparameters  
@@ -95,6 +102,19 @@ uv sync --locked
 
 ### 1. Train Model Locally
 
+To download the raw data and extract the csv file:
+```bash
+curl -L -O https://www.kaggle.com/api/v1/datasets/download/artermiloff/steam-games-dataset
+mv steam-games-dataset steam-games-dataset.zip
+
+unzip -l steam-games-dataset.zip
+
+unzip steam-games-dataset.zip games_march2025_cleaned.csv -d data
+rm steam-games-dataset.zip
+```
+
+The pickle file `data_preprocessed.pkl` can be used to load the preprocessed data
+
 ```bash
 uv run train.py
 ```
@@ -113,6 +133,8 @@ uv run predict_local.py
 - Output: JSON prediction + top contributors
 
 ### 3. Test Predictions
+
+- Edit `game_example.json`
 
 ```bash
 uv run request.py
@@ -155,7 +177,7 @@ docker run -p 9696:9696 steam-game-predictor
 
 ## 📖 References
 
-- [Kaggle Dataset Link](https://doi.org/10.34740/KAGGLE/DSV/11017460)
+- Artemiy Ermilov, Arina Nevolina, Artem Pospelov, and Assol Kubaeva. (2025). Steam Games Dataset 2025 [Data set](https://doi.org/10.34740/KAGGLE/DSV/11017460). Kaggle.
 - [XGBoost Documentation](https://xgboost.readthedocs.io/)  
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)  
 - [Fly.io Docs](https://fly.io/docs/)

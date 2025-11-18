@@ -207,6 +207,6 @@ marimo/_lsp/
 __marimo__/
 
 # Additional files and directories
-data/
+data/games_march2025_cleaned.csv
 *.qmd
 search_results.pkl
