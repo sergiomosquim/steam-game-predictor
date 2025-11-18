@@ -210,3 +210,4 @@ __marimo__/
 data/games_march2025_cleaned.csv
 *.qmd
 search_results.pkl
+.github/
