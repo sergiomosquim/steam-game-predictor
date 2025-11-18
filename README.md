@@ -132,10 +132,26 @@ uv run predict_local.py
 - Input: JSON matching `game_example.json`  
 - Output: JSON prediction + top contributors
 
-### 3. Test Predictions
+### 3. Test Predictions using fly.io deployment
 
 - Edit `game_example.json`
 
+```bash
+uv run request.py
+```
+
+- Reads `game_example.json`  
+- Prints **Prediction Summary** & **Top Feature Contributions** in tables
+
+### 4. Test Predictions locally
+
+- Edit `game_example.json`
+- Change url in `requenst.py` to:
+```python
+url = "http://0.0.0.0:9696/predict"
+```
+
+- Run `request.py`:
 ```bash
 uv run request.py
 ```
@@ -149,11 +165,28 @@ uv run request.py
 
 ```json
 {
-    "price": 19.99,
-    "release_year": 2021,
-    "days_since_release": 300,
-    "dlc_count": 0,
-    "categories": ["Action", "Singleplayer"]
+    "price": 29.99,
+    "release_date": "2025-01-15",
+    "genres": [
+        "Action",
+        "Adventure"
+    ],
+    "categories": [
+        "Single-player",
+        "Co-op"
+    ],
+    "developers": [
+        "IndieDevStudio"
+    ],
+    "publishers": [
+        "IndiePublisher"
+    ],
+    "discount": 0.2,
+    "required_age": 12,
+    "dlc_count": 1,
+    "windows": true,
+    "mac": false,
+    "linux": false
 }
 ```
 
