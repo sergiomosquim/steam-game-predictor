@@ -220,3 +220,11 @@ docker run -p 9696:9696 steam-game-predictor
 ## License
 
 MIT License – see LICENSE file for details.
+
+## Considerations
+
+The model uses `release_date` as a numeric feature based on the dates available in the training data (up to March 2025).  
+Tree-based models like XGBoost cannot extrapolate beyond the date range they have seen, so predictions for games with **future release dates** or dates **outside the training range** may be less reliable or produce flattened feature contributions.
+The current implementation caps the data to latest `2025-03-31`, which reduces utility of the model in its current implementation.
+
+This does not affect API functionality, but it is important to consider when interpreting prediction results.
