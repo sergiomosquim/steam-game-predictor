@@ -1,0 +1,24 @@
+{
+    "price": 29.99,
+    "release_date": "2025-01-15",
+    "genres": [
+        "Action",
+        "Adventure"
+    ],
+    "categories": [
+        "Single-player",
+        "Co-op"
+    ],
+    "developers": [
+        "IndieDevStudio"
+    ],
+    "publishers": [
+        "IndiePublisher"
+    ],
+    "discount": 0.2,
+    "required_age": 12,
+    "dlc_count": 1,
+    "windows": true,
+    "mac": false,
+    "linux": false
+}

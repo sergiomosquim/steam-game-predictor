@@ -1,0 +1,25 @@
+# Ignore notebooks and Quarto files
+*.ipynb
+*.qmd
+
+# Ignore local cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignore test scripts
+request.py
+predict_local.py
+
+# Ignore data directory (if not needed in container)
+data/
+
+# Ignore model search results and intermediate files
+search_results.pkl
+best_xgboost_params.json
+final_model.pkl
+
+# Ignore version control and OS files
+.git/
+.gitignore
+.DS_Store
